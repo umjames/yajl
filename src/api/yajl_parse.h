@@ -108,7 +108,7 @@ extern "C" {
         int (* yajl_start_array)(void * ctx);
         int (* yajl_end_array)(void * ctx);        
     } yajl_callbacks;
-    
+
     /** configuration structure for the generator */
     typedef struct {
         /** if nonzero, javascript style comments will be allowed in
@@ -117,7 +117,49 @@ extern "C" {
         /** if nonzero, invalid UTF8 strings will cause a parse
          *  error */
         unsigned int checkUTF8;
+        /** 'parseMode' configuration deals with how YAJL behaves once a
+         *  successful value is parsed off the stream.  The value may be one
+         *  of the YAJL_PM_XXX defines.  Allowable values and their meanings
+         *  are:
+         *  YAJL_PM_STOP: emulate 1.0.x behavior, after a successful object
+         *     is parsed off the stream, yajl enters a 'complete' state and
+         *     ignores subsequent input passed via the yajl_parse call.
+         *     Example: In this mode the json text '"foo"xxx' would be
+         *     considered valid json, and a single string would be
+         *     parsed. The text '"foo""bar""baz"' would also be
+         *     considered valid, and a single string ('foo') would be
+         *     returned from YAJL.
+         *  YAJL_PM_CONTINUE: parse any number of values off the stream,
+         *     transparently restarting.
+         *     Examples:
+         *       '"foo"xxx' would return a single string ('foo') and
+         *       subsequently, yajl_parse would return a syntax error.
+         *       '"foo""bar""baz"' would return three strings and the
+         *       parse would successfully complete.
+         *  YAJL_PM_SINGLE: A mode which may be used when the client is
+         *     certain that the stream contains a single JSON object and
+         *     like to validate the whole input text.
+         *     Examples:
+         *       '"foo"xxx' would return a single string ('foo') and
+         *       subsequently, yajl_parse would return a syntax error.
+         *       '"foo""bar""baz"' would return a single string ('foo') and
+         *       subsequently, yajl_parse would return an error.
+         */
+        unsigned int parseMode;
     } yajl_parser_config;
+
+    /** A parsing mode where subsequent to the successful parsing of a
+     *  value, all input text is ignored. */
+    #define YAJL_PM_INGORE 0
+    /** A parsing mode where YAJL will automatically restart itself, parsing
+     *  any number of values off of the stream. */
+    #define YAJL_PM_CONTINUE 1
+    /** A parsing mode where YAJL will attempt to parse a single value off
+     *  of the top level stream, returning an error if anything other than
+     *  whitespace is found after the top level value. */
+    #define YAJL_PM_SINGLE 2
+    
+
 
     /** allocate a parser handle
      *  \param callbacks  a yajl callbacks structure specifying the

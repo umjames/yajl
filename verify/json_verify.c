@@ -62,7 +62,7 @@ main(int argc, char ** argv)
     /* check arguments.*/
     int a = 1;
     while ((a < argc) && (argv[a][0] == '-') && (strlen(argv[a]) > 1)) {
-        int i;
+        size_t i;
         for ( i=1; i < strlen(argv[a]); i++) {
             switch (argv[a][i]) {
                 case 'q':

@@ -58,7 +58,7 @@ struct yajl_handle_t {
     void * ctx;
     yajl_lexer lexer;
     const char * parseError;
-    unsigned int errorOffset;
+    size_t errorOffset;
     /* temporary storage for decoded strings */
     yajl_buf decodeBuf;
     /* a stack of states.  access with yajl_state_XXX routines */
@@ -68,12 +68,12 @@ struct yajl_handle_t {
 };
 
 yajl_status
-yajl_do_parse(yajl_handle handle, unsigned int * offset,
-              const unsigned char * jsonText, unsigned int jsonTextLen);
+yajl_do_parse(yajl_handle handle, size_t * offset,
+              const unsigned char * jsonText, size_t jsonTextLen);
 
 unsigned char *
 yajl_render_error_string(yajl_handle hand, const unsigned char * jsonText,
-                         unsigned int jsonTextLen, int verbose);
+                         size_t jsonTextLen, int verbose);
 
 
 #endif

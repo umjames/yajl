@@ -37,6 +37,8 @@
 extern "C" {
 #endif    
 
+#include <sys/types.h>
+    
 #define YAJL_MAX_DEPTH 128
 
 /* msft dll export gunk.  To build a DLL on windows, you
@@ -54,14 +56,14 @@ extern "C" {
 
 /** pointer to a malloc function, supporting client overriding memory
  *  allocation routines */
-typedef void * (*yajl_malloc_func)(void *ctx, unsigned int sz);
+typedef void * (*yajl_malloc_func)(void *ctx, size_t sz);
 
 /** pointer to a free function, supporting client overriding memory
  *  allocation routines */
 typedef void (*yajl_free_func)(void *ctx, void * ptr);
 
 /** pointer to a realloc function which can resize an allocation. */
-typedef void * (*yajl_realloc_func)(void *ctx, void * ptr, unsigned int sz);
+typedef void * (*yajl_realloc_func)(void *ctx, void * ptr, size_t sz);
 
 /** A structure which can be passed to yajl_*_alloc routines to allow the
  *  client to specify memory allocation functions to be used. */

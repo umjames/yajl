@@ -99,10 +99,10 @@ extern "C" {
     yajl_gen_status YAJL_API yajl_gen_double(yajl_gen hand, double number);
     yajl_gen_status YAJL_API yajl_gen_number(yajl_gen hand,
                                              const char * num,
-                                             unsigned int len);
+                                             size_t len);
     yajl_gen_status YAJL_API yajl_gen_string(yajl_gen hand,
                                              const unsigned char * str,
-                                             unsigned int len);
+                                             size_t len);
     yajl_gen_status YAJL_API yajl_gen_null(yajl_gen hand);
     yajl_gen_status YAJL_API yajl_gen_bool(yajl_gen hand, int boolean);    
     yajl_gen_status YAJL_API yajl_gen_map_open(yajl_gen hand);
@@ -115,7 +115,7 @@ extern "C" {
      *  buffer.  This allows stream generation. */
     yajl_gen_status YAJL_API yajl_gen_get_buf(yajl_gen hand,
                                               const unsigned char ** buf,
-                                              unsigned int * len);
+                                              size_t * len);
 
     /** clear yajl's output buffer, but maintain all internal generation
      *  state.  This function will not "reset" the generator state, and is

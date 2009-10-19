@@ -38,6 +38,7 @@ extern "C" {
 #endif    
 
 #include <sys/types.h>
+#include <stdlib.h>
     
 #define YAJL_MAX_DEPTH 128
 
